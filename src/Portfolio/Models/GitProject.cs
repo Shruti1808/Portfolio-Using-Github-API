@@ -11,7 +11,7 @@ namespace Portfolio.Models
 {
     public class GitProject
     {
-        public string HtmlUrl { get; set; }
+        public string Html_Url { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -19,6 +19,7 @@ namespace Portfolio.Models
         {
             var client = new RestClient("https://api.github.com/");
             var request = new RestRequest("search/repositories");
+            client.Authenticator = new HttpBasicAuthenticator("");
             //q = The search keywords, as well as any qualifiers and value=string.
             request.AddParameter("q", "Shruti1808");
             //Searches and sorts repositories based on the number of stars.
@@ -27,8 +28,8 @@ namespace Portfolio.Models
             request.AddParameter("order", "desc");
             //to display your three most-starred repositories.
             request.AddParameter("per_page", "3");
-            client.AddDefaultHeader("Authorization", "token " + EnvironmentVariables.AuthToken);
-            request.AddHeader("User-Agent", "Epicodus Portfolio Project");
+            //client.AddDefaultHeader("Authorization", "token " + EnvironmentVariables.AuthToken);
+            //request.AddHeader("User-Agent", "Epicodus Portfolio Project");
             var response = new RestResponse();
             Task.Run(async () =>
             {
@@ -43,7 +44,7 @@ namespace Portfolio.Models
             {
                 GitProject newProject = new GitProject();
                 newProject.Name = items[i]["name"].ToString();
-                newProject.HtmlUrl = items[i]["html_url"].ToString();
+                newProject.Html_Url = items[i]["html_url"].ToString();
                 newProject.Description = items[i]["description"].ToString();
                 projectList.Add(newProject);
             }
