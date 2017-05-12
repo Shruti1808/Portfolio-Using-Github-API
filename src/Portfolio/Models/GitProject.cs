@@ -19,7 +19,7 @@ namespace Portfolio.Models
         {
             var client = new RestClient("https://api.github.com/");
             var request = new RestRequest("search/repositories", Method.GET);
-            client.Authenticator = new HttpBasicAuthenticator(Microsoft.Extensions.Configuration.EnvironmentVariables.AuthToken);
+            
             //q = The search keywords, as well as any qualifiers and value=string.
             request.AddParameter("q", "Shruti1808");
             //Searches and sorts repositories based on the number of stars.
@@ -28,8 +28,8 @@ namespace Portfolio.Models
             request.AddParameter("order", "desc");
             //to display your three most-starred repositories.
             request.AddParameter("per_page", "3");
-            //client.AddDefaultHeader("Authorization", "token " + EnvironmentVariables.AuthToken);
-            //request.AddHeader("User-Agent", "Epicodus Portfolio Project");
+            request.AddHeader("User-Agent", "Shruti1808");
+            request.AddHeader("Accept", "application/vnd.github.v3+json");
             var response = new RestResponse();
             Task.Run(async () =>
             {
