@@ -18,8 +18,8 @@ namespace Portfolio.Models
         public static List<GitProject> GetProjects()
         {
             var client = new RestClient("https://api.github.com/");
-            var request = new RestRequest("search/repositories");
-            client.Authenticator = new HttpBasicAuthenticator("");
+            var request = new RestRequest("search/repositories", Method.GET);
+            client.Authenticator = new HttpBasicAuthenticator(Microsoft.Extensions.Configuration.EnvironmentVariables.AuthToken);
             //q = The search keywords, as well as any qualifiers and value=string.
             request.AddParameter("q", "Shruti1808");
             //Searches and sorts repositories based on the number of stars.
