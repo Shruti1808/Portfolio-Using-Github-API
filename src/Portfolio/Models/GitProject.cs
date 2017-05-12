@@ -11,7 +11,7 @@ namespace Portfolio.Models
 {
     public class GitProject
     {
-        public string Html_Url { get; set; }
+        public string HtmlUrl { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -31,23 +31,31 @@ namespace Portfolio.Models
             request.AddHeader("User-Agent", "Shruti1808");
             request.AddHeader("Accept", "application/vnd.github.v3+json");
             var response = new RestResponse();
+            Console.WriteLine(response);
             Task.Run(async () =>
             {
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
 
-            JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            var items = jsonResponse["items"];
-            var projectList = new List<GitProject> { };
+            //JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
+            //var items = jsonResponse["items"];
+            //var projectList = new List<GitProject> { };
 
-            for (int i = 0; i < items.Count(); i++)
-            {
-                GitProject newProject = new GitProject();
-                newProject.Name = items[i]["name"].ToString();
-                newProject.Html_Url = items[i]["html_url"].ToString();
-                newProject.Description = items[i]["description"].ToString();
-                projectList.Add(newProject);
-            }
+            //for (int i = 0; i < items.Count(); i++)
+            //{
+            //    GitProject newProject = new GitProject();
+            //    newProject.Name = items[i]["name"].ToString();
+            //    newProject.HtmlUrl = items[i]["html_url"].ToString();
+            //    newProject.Description = items[i]["description"].ToString();
+            //    projectList.Add(newProject);
+            //}
+            //return projectList;
+
+            JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
+            string jsonOutput = jsonResponse["repositories"].ToString();
+            Console.WriteLine(jsonOutput);
+            var projectList = JsonConvert.DeserializeObject<List<GitProject>>(jsonOutput);
+            Console.WriteLine(projectList[0].Name);
             return projectList;
         }
 

@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.Models;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Portfolio.Controllers
 {
     public class HomeController : Controller
@@ -23,10 +21,10 @@ namespace Portfolio.Controllers
         }
 
         //Method to display list of all projects
-        public IActionResult Projects()
+        public IActionResult GetProjects()
         {
-            List<GitProject> projectList = GitProject.GetProjects();
-            return View(projectList);
+            List<GitProject>projectList = GitProject.GetProjects();
+            return Json(projectList);
         }
     }
 }
