@@ -1,5 +1,19 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@{
+    ViewData["Title"] = "Projects";
+}
+<h2>My Starred Projects on GitHub</h2>
+
 @{
+    int counter = 0;
+}
+
+@foreach (var project in Model)
+{
+    counter++;
+    <div class="panel panel-primary bw-opacity-0" id="panel-@counter">
+        <div class="panel-heading"><a href="@project.HtmlUrl" class="white-link">@project.Name</a></div>
+        <div class="panel-body">
+            @project.Description
+        </div>
+    </div>
 }
