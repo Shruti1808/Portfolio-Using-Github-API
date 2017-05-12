@@ -5,6 +5,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace Portfolio.Models
 {
@@ -18,9 +19,13 @@ namespace Portfolio.Models
         {
             var client = new RestClient("https://api.github.com/");
             var request = new RestRequest("search/repositories");
+            //q = The search keywords, as well as any qualifiers and value=string.
             request.AddParameter("q", "Shruti1808");
+            //Searches and sorts repositories based on the number of stars.
             request.AddParameter("sort", "stars");
+            //The sort order if sort parameter is provided. One of asc or desc. Default: desc
             request.AddParameter("order", "desc");
+            //to display your three most-starred repositories.
             request.AddParameter("per_page", "3");
             client.AddDefaultHeader("Authorization", "token " + EnvironmentVariables.AuthToken);
             request.AddHeader("User-Agent", "Epicodus Portfolio Project");
@@ -29,6 +34,7 @@ namespace Portfolio.Models
             {
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
+
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
             var items = jsonResponse["items"];
             var projectList = new List<GitProject> { };
@@ -41,7 +47,6 @@ namespace Portfolio.Models
                 newProject.Description = items[i]["description"].ToString();
                 projectList.Add(newProject);
             }
-            //ViewBag.myString = response.Content.ToString();
             return projectList;
         }
 
