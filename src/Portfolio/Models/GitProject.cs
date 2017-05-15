@@ -18,8 +18,10 @@ namespace Portfolio.Models
         public static List<GitProject> GetProjects()
         {
             var client = new RestClient("https://api.github.com/");
-            var request = new RestRequest("users/Shruti1808/repos", Method.GET);
-            
+            var request = new RestRequest("users/" + EnvironmentVariables.User + "/starred", Method.GET);
+            request.AddHeader("User-Agent", EnvironmentVariables.User);
+            request.AddHeader("Accept", "application/vnd.github.v3+json");
+            Console.WriteLine("request " + request);
             ////q = The search keywords, as well as any qualifiers and value=string.
             //request.AddParameter("q", "Shruti1808");
             ////Searches and sorts repositories based on the number of stars.
@@ -28,10 +30,8 @@ namespace Portfolio.Models
             //request.AddParameter("order", "desc");
             ////to display your three most-starred repositories.
             //request.AddParameter("per_page", "3");
-            request.AddHeader("User-Agent", "Shruti1808");
-            request.AddHeader("Accept", "application/vnd.github.v3+json");
             var response = new RestResponse();
-            Console.WriteLine(response);
+            Console.WriteLine("response " + response);
             Task.Run(async () =>
             {
                 response = await GetResponseContentAsync(client, request) as RestResponse;
@@ -52,9 +52,9 @@ namespace Portfolio.Models
             //return projectList;
 
             JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(response.Content);
-            //string jsonOutput = jsonResponse["repositories"].ToString();
-            //Console.WriteLine(jsonOutput);
-            var projectList = JsonConvert.DeserializeObject<List<GitProject>>(jsonResponse.ToString());
+            string jsonOutput = jsonResponse.ToString();
+            Console.WriteLine(jsonResponse);
+            var projectList = JsonConvert.DeserializeObject<List<GitProject>>(jsonOutput);
             Console.WriteLine(projectList[0].Name);
             return projectList;
         }

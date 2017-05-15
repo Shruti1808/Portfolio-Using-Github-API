@@ -7,20 +7,19 @@ using Portfolio.Models;
 
 namespace Portfolio.Controllers
 {
-    public class HomeController : Controller
+    public class ProjectController : Controller
     {
         // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
-        //Create an About action
-        public IActionResult About()
+        public IActionResult Projects()
         {
             return View();
         }
 
-        
-        
+        //Method to display list of all projects
+        public IActionResult GetProjects()
+        {
+            List<GitProject> projectList = GitProject.GetProjects();
+            return View(projectList);
+        }
     }
 }
