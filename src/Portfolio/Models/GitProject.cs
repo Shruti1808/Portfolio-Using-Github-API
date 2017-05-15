@@ -18,16 +18,16 @@ namespace Portfolio.Models
         public static List<GitProject> GetProjects()
         {
             var client = new RestClient("https://api.github.com/");
-            var request = new RestRequest("search/repositories", Method.GET);
+            var request = new RestRequest("users/Shruti1808/repos", Method.GET);
             
-            //q = The search keywords, as well as any qualifiers and value=string.
-            request.AddParameter("q", "Shruti1808");
-            //Searches and sorts repositories based on the number of stars.
-            request.AddParameter("sort", "stars");
-            //The sort order if sort parameter is provided. One of asc or desc. Default: desc
-            request.AddParameter("order", "desc");
-            //to display your three most-starred repositories.
-            request.AddParameter("per_page", "3");
+            ////q = The search keywords, as well as any qualifiers and value=string.
+            //request.AddParameter("q", "Shruti1808");
+            ////Searches and sorts repositories based on the number of stars.
+            //request.AddParameter("sort", "stars");
+            ////The sort order if sort parameter is provided. One of asc or desc. Default: desc
+            //request.AddParameter("order", "desc");
+            ////to display your three most-starred repositories.
+            //request.AddParameter("per_page", "3");
             request.AddHeader("User-Agent", "Shruti1808");
             request.AddHeader("Accept", "application/vnd.github.v3+json");
             var response = new RestResponse();
@@ -51,10 +51,10 @@ namespace Portfolio.Models
             //}
             //return projectList;
 
-            JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            string jsonOutput = jsonResponse["repositories"].ToString();
-            Console.WriteLine(jsonOutput);
-            var projectList = JsonConvert.DeserializeObject<List<GitProject>>(jsonOutput);
+            JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(response.Content);
+            //string jsonOutput = jsonResponse["repositories"].ToString();
+            //Console.WriteLine(jsonOutput);
+            var projectList = JsonConvert.DeserializeObject<List<GitProject>>(jsonResponse.ToString());
             Console.WriteLine(projectList[0].Name);
             return projectList;
         }
