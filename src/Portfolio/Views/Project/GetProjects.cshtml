@@ -11,7 +11,7 @@
 @foreach (var project in Model)
 {
     counter++;
-    <div class="panel panel-primary bw-opacity-0" id="panel-@counter">
+    <div class="panel panel-info bw-opacity-0" id="panel-@counter">
         <div class="panel-heading"><a href="@project.HtmlUrl" class="white-link">@project.Name</a></div>
         <div class="panel-body">
             @project.Description

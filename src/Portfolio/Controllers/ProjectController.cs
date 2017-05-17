@@ -10,10 +10,10 @@ namespace Portfolio.Controllers
     public class ProjectController : Controller
     {
         // GET: /<controller>/
-        public IActionResult Projects()
-        {
-            return View();
-        }
+        //public IActionResult Projects()
+        //{
+        //    return View();
+        //}
 
         //Method to display list of all projects
         public IActionResult GetProjects()
